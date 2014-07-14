@@ -26,3 +26,4 @@ dep/
 *~
 \#*\#
 *.swp
+Makefile.local

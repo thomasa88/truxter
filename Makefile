@@ -1,4 +1,5 @@
-TOOLCHAIN := arm-none-eabi-
+-include Makefile.local
+TOOLCHAIN ?= arm-none-eabi-
 #CC := ${TOOLCHAIN}gcc
 CXX := ${TOOLCHAIN}g++
 LD := ${TOOLCHAIN}ld
