@@ -19,3 +19,10 @@
 *.exe
 *.out
 *.app
+
+obj/
+bin/
+dep/
+*~
+\#*\#
+*.swp
