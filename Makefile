@@ -13,9 +13,12 @@ BIN_DIR := bin
 DEP_DIR := dep
 GEN_DIRS := $(OBJ_DIR) $(BIN_DIR) $(DEP_DIR)
 
-SRC_FILES := $(wildcard src/*.cpp) $(wildcard src/hw/*.cpp)
+SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/**/*.cpp)
 OBJ_FILES := $(addprefix $(OBJ_DIR)/,$(notdir $(SRC_FILES:.cpp=.o)))
 DEP_FILES := $(addprefix $(DEP_DIR)/,$(notdir $(SRC_FILES:.cpp=.d)))
+
+ALL_SRC_DIRS := $(SRC_DIR) $(patsubst %/,%,$(filter %/, $(wildcard $(SRC_DIR)/*/)))
+VPATH += $(ALL_SRC_DIRS)
 
 CFLAGS := -g -std=c++11 -Wall -pedantic -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions
 #-e _ZN9interrupt12vector_resetEv
@@ -48,7 +51,7 @@ $(BIN_DIR)/%.axf: $(OBJ_FILES) | $(OBJ_DIR) $(BIN_DIR)
 #Linking with g++ automatically provides libstdc++, libgcc and memcpy
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
 
-$(OBJ_DIR)/%.o:src/%.cpp | $(OBJ_DIR) $(DEP_DIR)
+$(OBJ_DIR)/%.o: %.cpp | $(OBJ_DIR) $(DEP_DIR)
 	$(CXX) $(CXXFLAGS) -MD -MF $(DEP_DIR)/$*.d -c -o $@ $<
 
 -include $(DEP_FILES)

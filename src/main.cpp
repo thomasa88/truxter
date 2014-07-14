@@ -1,6 +1,6 @@
 #include <cstdint>
 
-#include "interrupt.h"
+#include "hw/interrupt.h"
 
 #define SYSCTL_BASE 0x400fe000
 
