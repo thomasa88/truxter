@@ -5,17 +5,25 @@
 #define SYSCTL_BASE 0x400fe000
 
 // This shifting works if working with 32-bit pointers
+#define BIT0_MASK (1 << 0)
 #define BIT1_MASK (1 << 1)
+#define BIT0 0
 #define BIT1 1
 
+#define PORTD 3
 #define PORTF 5
+#define R3 3
 #define R5 5
 #define GPIOHBCTL (*((volatile std::uint32_t *)(SYSCTL_BASE + 0x6c)))
 #define RCGCGPIO (*((volatile std::uint32_t *)(SYSCTL_BASE + 0x608)))
 
+#define PORTD_AHB_BASE 0x4005b000
 #define PORTF_AHB_BASE 0x4005d000
+#define PORTD_GPIODATA (*((volatile std::uint32_t *)(PORTD_AHB_BASE)))
 #define PORTF_GPIODATA (*((volatile std::uint32_t *)(PORTF_AHB_BASE)))
+#define PORTD_GPIODIR (*((volatile std::uint32_t *)(PORTD_AHB_BASE + 0x400)))
 #define PORTF_GPIODIR (*((volatile std::uint32_t *)(PORTF_AHB_BASE + 0x400)))
+#define PORTD_GPIODEN (*((volatile std::uint32_t *)(PORTD_AHB_BASE + 0x51c)))
 #define PORTF_GPIODEN (*((volatile std::uint32_t *)(PORTF_AHB_BASE + 0x51c)))
 
 
@@ -152,10 +160,10 @@ int main()
    hw::Timer &timer0_16_32 = *reinterpret_cast<hw::Timer *>(TIMER0_16_32_BASE);
 
    // Enable port clock in run mode
-   RCGCGPIO |= (1 << R5);
+   RCGCGPIO |= (1 << R5) | (1 << R3);
    
    // Enable AHB (bus)
-   GPIOHBCTL |= (1 << PORTF);
+   GPIOHBCTL |= (1 << PORTF) | (1 << PORTD);
 
    // Enable timer module clock in run mode
    RCGCTIMER |= (1 << R0);
@@ -168,10 +176,12 @@ int main()
    }
    
    // Digital pin
-   PORTF_GPIODEN |= 1 << BIT1;
+   PORTF_GPIODEN |= (1 << BIT1);
+   PORTD_GPIODEN |= (1 << BIT0);
    
    // Led pin output
-   PORTF_GPIODIR |= 1 << BIT1;
+   PORTF_GPIODIR |= (1 << BIT1);
+   PORTD_GPIODIR |= (1 << BIT0);
    
    // Default 2mA drive
 
@@ -212,4 +222,5 @@ ISR(vector_16_32_bit_timer_0a)
    TIMER0_16_32_GPTMICR = (1 << TATOCINT);
 
    (&PORTF_GPIODATA)[BIT1_MASK] = ~(&PORTF_GPIODATA)[BIT1_MASK];
+   (&PORTD_GPIODATA)[BIT0_MASK] = ~(&PORTD_GPIODATA)[BIT0_MASK];
 }
