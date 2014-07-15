@@ -108,7 +108,7 @@ INTERRUPT_DEF vector_pwm1_generator_3();
 INTERRUPT_DEF vector_pwm1_fault();
 INTERRUPT_DEF vector_reserved();
 
-void (*const isr_vector[ISR_VECTOR_LENGTH])() __attribute__ ((section(".isr_vector"))) =
+extern void (*const isr_vector[ISR_VECTOR_LENGTH])() __attribute__ ((section(".isr_vector"))) =
 {
    //Make a struct instead? Want to show stack start is part of vector in documentation
    __extension__ reinterpret_cast<void (*)()>(&_stack),
