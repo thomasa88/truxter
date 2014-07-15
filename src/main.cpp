@@ -152,6 +152,8 @@ namespace hw
    };
 }
 
+hw::Gpio &portD = *reinterpret_cast<hw::Gpio*>(PORTD_AHB_BASE);
+
 int main()
 {
    // need to configure sysclk?
@@ -177,11 +179,13 @@ int main()
    
    // Digital pin
    PORTF_GPIODEN |= (1 << BIT1);
-   PORTD_GPIODEN |= (1 << BIT0);
+   //PORTD_GPIODEN |= (1 << BIT0);
+   portD.GPIODEN |= (1 << BIT0);
    
    // Led pin output
    PORTF_GPIODIR |= (1 << BIT1);
-   PORTD_GPIODIR |= (1 << BIT0);
+   //PORTD_GPIODIR |= (1 << BIT0);
+   portD.GPIODIR |= (1 << BIT0);
    
    // Default 2mA drive
 
@@ -222,5 +226,5 @@ ISR(vector_16_32_bit_timer_0a)
    TIMER0_16_32_GPTMICR = (1 << TATOCINT);
 
    (&PORTF_GPIODATA)[BIT1_MASK] = ~(&PORTF_GPIODATA)[BIT1_MASK];
-   (&PORTD_GPIODATA)[BIT0_MASK] = ~(&PORTD_GPIODATA)[BIT0_MASK];
+   portD.GPIODATA[BIT0_MASK] = ~portD.GPIODATA[BIT0_MASK];
 }
