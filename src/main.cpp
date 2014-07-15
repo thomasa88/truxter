@@ -19,13 +19,6 @@
 
 #define PORTD_AHB_BASE 0x4005b000
 #define PORTF_AHB_BASE 0x4005d000
-#define PORTD_GPIODATA (*((volatile std::uint32_t *)(PORTD_AHB_BASE)))
-#define PORTF_GPIODATA (*((volatile std::uint32_t *)(PORTF_AHB_BASE)))
-#define PORTD_GPIODIR (*((volatile std::uint32_t *)(PORTD_AHB_BASE + 0x400)))
-#define PORTF_GPIODIR (*((volatile std::uint32_t *)(PORTF_AHB_BASE + 0x400)))
-#define PORTD_GPIODEN (*((volatile std::uint32_t *)(PORTD_AHB_BASE + 0x51c)))
-#define PORTF_GPIODEN (*((volatile std::uint32_t *)(PORTF_AHB_BASE + 0x51c)))
-
 
 // #define PORTF_APB_BASE 0x40025000
 // #define PORTF_GPIODATA (*((std::uint32_t *)(PORTF_APB_BASE)))
@@ -153,6 +146,7 @@ namespace hw
 }
 
 hw::Gpio &portD = *reinterpret_cast<hw::Gpio*>(PORTD_AHB_BASE);
+hw::Gpio &portF = *reinterpret_cast<hw::Gpio*>(PORTF_AHB_BASE);
 
 int main()
 {
@@ -178,13 +172,11 @@ int main()
    }
    
    // Digital pin
-   PORTF_GPIODEN |= (1 << BIT1);
-   //PORTD_GPIODEN |= (1 << BIT0);
+   portF.GPIODEN |= (1 << BIT1);
    portD.GPIODEN |= (1 << BIT0);
    
    // Led pin output
-   PORTF_GPIODIR |= (1 << BIT1);
-   //PORTD_GPIODIR |= (1 << BIT0);
+   portF.GPIODIR |= (1 << BIT1);
    portD.GPIODIR |= (1 << BIT0);
    
    // Default 2mA drive
@@ -225,6 +217,6 @@ ISR(vector_16_32_bit_timer_0a)
    // Clear interrupt flag early so interrupt won't be retriggered by NVIC
    TIMER0_16_32_GPTMICR = (1 << TATOCINT);
 
-   (&PORTF_GPIODATA)[BIT1_MASK] = ~(&PORTF_GPIODATA)[BIT1_MASK];
    portD.GPIODATA[BIT0_MASK] = ~portD.GPIODATA[BIT0_MASK];
+   portF.GPIODATA[BIT1_MASK] = ~portF.GPIODATA[BIT1_MASK];
 }
