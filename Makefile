@@ -51,7 +51,10 @@ $(BIN_DIR)/%.axf: $(OBJ_FILES) | $(OBJ_DIR) $(BIN_DIR)
 #Linking with g++ automatically provides libstdc++, libgcc and memcpy
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
 
-$(OBJ_DIR)/%.o: %.cpp | $(OBJ_DIR) $(DEP_DIR)
-	$(CXX) $(CXXFLAGS) -MD -MF $(DEP_DIR)/$*.d -c -o $@ $<
+$(OBJ_DIR)/%.o: %.cpp | $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+$(DEP_DIR)/%.d: %.cpp | $(DEP_DIR)
+	$(CXX) $(CXXFLAGS) -MM $< | sed "s@^\(.*\?\)\.o:@$(OBJ_DIR)/\1.o $(DEP_DIR)/\1.d:@" > $@
 
 -include $(DEP_FILES)
