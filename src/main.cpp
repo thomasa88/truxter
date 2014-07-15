@@ -51,6 +51,7 @@
 namespace hw
 {
    using register_type = volatile std::uint32_t;
+   using register_pad = std::uint32_t;
    class Timer
    {
    public:
@@ -59,7 +60,7 @@ namespace hw
       register_type GPTMTBMR;
       register_type GPTMCTL;
       register_type GPTM_SYNC;
-      register_type undef;
+      register_type pad1;
       register_type GPTMIMR;
       const register_type GPTMRIS;
       const register_type GPTMMIS;
@@ -81,6 +82,65 @@ namespace hw
       const register_type GPTMTBPV;
       // long pad
 //      const register_type GPTMPP;
+   };
+
+   class Gpio
+   {
+   public:
+      register_type GPIODATA[256];
+      register_type GPIODIR;
+      register_type GPIOIS;
+      register_type GPIOIBE;
+      register_type GPIOIEV;
+      register_type GPIOIM;
+      const register_type GPIORIS;
+      const register_type GPIOMIS;
+      register_type GPIOICR;
+      register_type GPIOAFSEL;
+      register_pad pad1[55];
+      register_type GPIODR2R;
+      register_type GPIODR4R;
+      register_type GPIODR8R;
+      register_type GPIOODR;
+      register_type GPIOPUR;
+      register_type GPIOPDR;
+      register_type GPIOSLR;
+      register_type GPIODEN;
+      register_type GPIOLOCK;
+      register_type GPIOCR;
+      register_type GPIOAMSEL;
+      register_type GPIOPCTL;
+      register_type GPIOADCCTL;
+      register_type GPIODMACTL;
+      register_pad pad2[678];
+      const register_type GPIOPeriphID4;
+      const register_type GPIOPeriphID5;
+      const register_type GPIOPeriphID6;
+      const register_type GPIOPeriphID7;
+      const register_type GPIOPeriphID0;
+      const register_type GPIOPeriphID1;
+      const register_type GPIOPeriphID2;
+      const register_type GPIOPeriphID3;
+      const register_type GPIOPCellID0;
+      const register_type GPIOPCellID1;
+      const register_type GPIOPCellID2;
+      const register_type GPIOPCellID3;
+   };
+
+   struct Gpios
+   {
+      struct Apb
+      {
+	 Gpio portA;
+	 Gpio portB;
+	 Gpio portC;
+	 Gpio portD;
+	 //pad?
+//	 port e f
+      };
+      struct Ahb
+      {
+      };
    };
 }
 
