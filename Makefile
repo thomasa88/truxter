@@ -14,11 +14,8 @@ DEP_DIR := dep
 GEN_DIRS := $(OBJ_DIR) $(BIN_DIR) $(DEP_DIR)
 
 SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/**/*.cpp)
-OBJ_FILES := $(addprefix $(OBJ_DIR)/,$(notdir $(SRC_FILES:.cpp=.o)))
-DEP_FILES := $(addprefix $(DEP_DIR)/,$(notdir $(SRC_FILES:.cpp=.d)))
-
-ALL_SRC_DIRS := $(SRC_DIR) $(patsubst %/,%,$(filter %/, $(wildcard $(SRC_DIR)/*/)))
-VPATH += $(ALL_SRC_DIRS)
+OBJ_FILES := $(subst $(SRC_DIR),$(OBJ_DIR),$(SRC_FILES:.cpp=.o))
+DEP_FILES := $(subst $(SRC_DIR),$(DEP_DIR),$(SRC_FILES:.cpp=.d))
 
 CFLAGS := -g -std=c++11 -Wall -pedantic -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions
 #-e _ZN9interrupt12vector_resetEv
@@ -42,19 +39,25 @@ clean:
 	rm -rf $(GEN_DIRS)
 
 $(GEN_DIRS):
-	mkdir -p $@
+	@mkdir -p $@
 
 $(BIN_DIR)/%.bin: $(BIN_DIR)/%.axf | $(BIN_DIR)
-	$(OBJCOPY) -O binary $< $@
+	@echo "BIN $^ -> $@"
+	@$(OBJCOPY) -O binary $< $@
 
 $(BIN_DIR)/%.axf: $(OBJ_FILES) | $(OBJ_DIR) $(BIN_DIR)
 #Linking with g++ automatically provides libstdc++, libgcc and memcpy
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
+	@echo "LD $^ -> $@"
+	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
 
-$(OBJ_DIR)/%.o: %.cpp | $(OBJ_DIR)
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@echo "CC $^ -> $@"
+	@mkdir -p `dirname $@`
+	@$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-$(DEP_DIR)/%.d: %.cpp | $(DEP_DIR)
-	$(CXX) $(CXXFLAGS) -MM $< | sed "s@^\(.*\?\)\.o:@$(OBJ_DIR)/\1.o $(DEP_DIR)/\1.d:@" > $@
+$(DEP_DIR)/%.d: $(SRC_DIR)/%.cpp
+	@echo "DEP $^ -> $@"
+	@mkdir -p `dirname $@`
+	@$(CXX) $(CXXFLAGS) -MM $< | sed "s@^.*:@$(OBJ_DIR)/$*.o $@:@" > $@
 
-include $(DEP_FILES)
+-include $(DEP_FILES)
