@@ -57,4 +57,4 @@ $(OBJ_DIR)/%.o: %.cpp | $(OBJ_DIR)
 $(DEP_DIR)/%.d: %.cpp | $(DEP_DIR)
 	$(CXX) $(CXXFLAGS) -MM $< | sed "s@^\(.*\?\)\.o:@$(OBJ_DIR)/\1.o $(DEP_DIR)/\1.d:@" > $@
 
--include $(DEP_FILES)
+include $(DEP_FILES)
