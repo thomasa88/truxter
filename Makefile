@@ -20,10 +20,10 @@ CFLAGS := -Wall -pedantic -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=
 
 # Set target specific flags
 ifeq ($(_TARGET),release)
-CFLAGS += -Os -g
+	CFLAGS += -Os -g
 endif
 ifeq ($(_TARGET),debug)
-CFLAGS += -g
+	CFLAGS += -g
 endif
 
 CXXFLAGS := $(CFLAGS) -std=c++11 -fno-rtti -fno-exceptions
@@ -38,33 +38,33 @@ LDFLAGS := -Wl,-T $(SRC_DIR)/hw/tm4c123gh6pm.ld -Wl,--gc-sections
 all: release debug
 build: $(BIN_DIR)/truxter.bin
 release:
-  $(MAKE) _TARGET=release build
+	$(MAKE) _TARGET=release build
 debug:
-  $(MAKE) _TARGET=debug build
+	$(MAKE) _TARGET=debug build
 
 clean:
-  rm -rf ${BUILD_DIR}
+	rm -rf ${BUILD_DIR}
 
 $(GEN_DIRS):
-  @mkdir -p $@
+	@mkdir -p $@
 
 $(BIN_DIR)/%.bin: $(BIN_DIR)/%.axf | $(BIN_DIR)
-  @echo "BIN $^ -> $@"
-  @$(OBJCOPY) -O binary $< $@
+	@echo "BIN $^ -> $@"
+	@$(OBJCOPY) -O binary $< $@
 
 $(BIN_DIR)/%.axf: $(OBJ_FILES) | $(OBJ_DIR) $(BIN_DIR)
 #Linking with g++ automatically provides libstdc++, libgcc and memcpy
-  @echo "LD $^ -> $@"
-  @$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
+	@echo "LD $^ -> $@"
+	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-  @echo "CC $^ -> $@"
-  @mkdir -p `dirname $@`
-  @$(CXX) $(CXXFLAGS) -c -o $@ $<
+	@echo "CC $^ -> $@"
+	@mkdir -p `dirname $@`
+	@$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 $(DEP_DIR)/%.d: $(SRC_DIR)/%.cpp
-  @echo "DEP $^ -> $@"
-  @mkdir -p `dirname $@`
-  @$(CXX) $(CXXFLAGS) -MM $< | sed "s@^.*:@$(OBJ_DIR)/$*.o $@:@" > $@
+	@echo "DEP $^ -> $@"
+	@mkdir -p `dirname $@`
+	@$(CXX) $(CXXFLAGS) -MM $< | sed "s@^.*:@$(OBJ_DIR)/$*.o $@:@" > $@
 
 -include $(DEP_FILES)
