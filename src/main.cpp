@@ -20,29 +20,15 @@
 #define PORTD_AHB_BASE 0x4005b000
 #define PORTF_AHB_BASE 0x4005d000
 
-// #define PORTF_APB_BASE 0x40025000
-// #define PORTF_GPIODATA (*((std::uint32_t *)(PORTF_APB_BASE)))
-// #define PORTF_GPIODIR (*((std::uint32_t *)(PORTF_APB_BASE + 0x400)))
-// #define PORTF_GPIODEN (*((std::uint32_t *)(PORTF_APB_BASE + 0x51c)))
-
 #define RCGCTIMER (*((volatile std::uint32_t *)(SYSCTL_BASE + 0x604)))
 #define R0 0
 
 #define TIMER0_16_32_BASE 0x40030000
-#define TIMER0_16_32_GPTMTAMR (*((volatile std::uint32_t *)(TIMER0_16_32_BASE + 0x004)))
-#define TIMER0_16_32_GPTMCTL (*((volatile std::uint32_t *)(TIMER0_16_32_BASE + 0x00c)))
-#define TIMER0_16_32_GPTMIMR (*((volatile std::uint32_t *)(TIMER0_16_32_BASE + 0x018)))
-#define TIMER0_16_32_GPTMTAV (*((volatile std::uint32_t *)(TIMER0_16_32_BASE + 0x050)))
-#define TIMER0_16_32_GPTMRIS (*((volatile std::uint32_t *)(TIMER0_16_32_BASE + 0x01c)))
-#define TIMER0_16_32_GPTMMIS (*((volatile std::uint32_t *)(TIMER0_16_32_BASE + 0x020)))
-#define TIMER0_16_32_GPTMICR (*((volatile std::uint32_t *)(TIMER0_16_32_BASE + 0x024)))
-#define TIMER0_16_32_GPTMTAILR (*((volatile std::uint32_t *)(TIMER0_16_32_BASE + 0x028)))
 
 #define TAMR 0
 #define TAEN 0
 #define TATOIM 0
 #define TATOCINT 0
-
 
 #define TIMER0A_16_32_INT_NUM 19
 #define CORE_PERIPH_BASE 0xe000e000
