@@ -147,13 +147,13 @@ namespace hw
 
 hw::Gpio &portD = *reinterpret_cast<hw::Gpio*>(PORTD_AHB_BASE);
 hw::Gpio &portF = *reinterpret_cast<hw::Gpio*>(PORTF_AHB_BASE);
+hw::Timer &timer0_16_32 = *reinterpret_cast<hw::Timer *>(TIMER0_16_32_BASE);
 
 int main()
 {
    // need to configure sysclk?
    // need to start bus?
 
-   hw::Timer &timer0_16_32 = *reinterpret_cast<hw::Timer *>(TIMER0_16_32_BASE);
 
    // Enable port clock in run mode
    RCGCGPIO |= (1 << R5) | (1 << R3);
@@ -192,9 +192,9 @@ int main()
 
    //GPTMCL TnEN = 0;
    //GPTMCFG = 0x0;
-   TIMER0_16_32_GPTMTAMR |= (0x2 << TAMR);
-   TIMER0_16_32_GPTMTAILR = 80000000;
-   TIMER0_16_32_GPTMIMR |= (1 << TATOIM);
+   timer0_16_32.GPTMTAMR |= (0x2 << TAMR);
+   timer0_16_32.GPTMTAILR = 80000000;
+   timer0_16_32.GPTMIMR |= (1 << TATOIM);
 //   TIMER0_16_32_GPTMCTL |= (1 << TAEN);
    timer0_16_32.GPTMCTL |= (1 << TAEN);
    
@@ -203,9 +203,9 @@ int main()
    {
 //      (&PORTF_GPIODATA)[BIT1_MASK] = (1 << BIT1);
 //      (&PORTF_GPIODATA)[BIT1_MASK] = (0 << BIT1);
-      int a = TIMER0_16_32_GPTMTAV;
-      int ris = TIMER0_16_32_GPTMRIS;
-      int mis = TIMER0_16_32_GPTMMIS;
+	  int a = timer0_16_32.GPTMTAV;
+      int ris = timer0_16_32.GPTMRIS;
+      int mis = timer0_16_32.GPTMMIS;
       asm("nop");
    }
 
@@ -215,7 +215,7 @@ int main()
 ISR(vector_16_32_bit_timer_0a)
 {
    // Clear interrupt flag early so interrupt won't be retriggered by NVIC
-   TIMER0_16_32_GPTMICR = (1 << TATOCINT);
+   timer0_16_32.GPTMICR = (1 << TATOCINT);
 
    portD.GPIODATA[BIT0_MASK] = ~portD.GPIODATA[BIT0_MASK];
    portF.GPIODATA[BIT1_MASK] = ~portF.GPIODATA[BIT1_MASK];
