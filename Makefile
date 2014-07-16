@@ -20,10 +20,10 @@ CFLAGS := -Wall -pedantic -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=
 
 # Set target specific flags
 ifeq ($(_TARGET),release)
-	CFLAGS += -Os -g
+CFLAGS += -Os -g
 endif
 ifeq ($(_TARGET),debug)
-	CFLAGS += -g
+CFLAGS += -g
 endif
 
 CXXFLAGS := $(CFLAGS) -std=c++11 -fno-rtti -fno-exceptions
