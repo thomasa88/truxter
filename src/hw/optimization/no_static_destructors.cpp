@@ -3,5 +3,5 @@
 
 extern "C" int __aeabi_atexit(void *object, void (*destructor)(void *), void *dso_handle)
 {
-   return 0;
+  return 0;
 }

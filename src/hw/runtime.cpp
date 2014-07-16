@@ -1,11 +1,11 @@
 extern "C"
 {
-   
-   void abort()
-   {
-      while(true)
+
+  void abort()
+  {
+    while(true)
       {
       }
-   }
+  }
 
 }

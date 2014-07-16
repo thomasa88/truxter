@@ -9,12 +9,12 @@
 
 void *operator new(std::size_t size)
 {
-   return operator new(size, std::nothrow);
-//   return malloc(size);
+  return operator new(size, std::nothrow);
+  // return malloc(size);
 }
 
 void operator delete(void *ptr)
 {
-   operator delete(ptr, std::nothrow);
-//   return free(ptr);
+  operator delete(ptr, std::nothrow);
+  // return free(ptr);
 }

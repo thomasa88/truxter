@@ -18,21 +18,21 @@ extern "C" void __libc_init_array();
 
 ISR(vector_reset)
 {
-   // Copy .data to SRAM
-   std::memcpy(&_data, &_data_load, &_edata - &_data);
+  // Copy .data to SRAM
+  std::memcpy(&_data, &_data_load, &_edata - &_data);
 
-   // Zero .bss
-   std::memset(&_bss, 0, &_ebss - &_bss);
+  // Zero .bss
+  std::memset(&_bss, 0, &_ebss - &_bss);
 
-   // Stack pointers?
+  // Stack pointers?
 
-   // Static constructors
-   __libc_init_array();
-//   __init_array_start();
+  // Static constructors
+  __libc_init_array();
+  //   __init_array_start();
 
-   // Start
-   // __extension__ allows non-pedantic code. In this case, getting the address of main.
-   __extension__ main();
+  // Start
+  // __extension__ allows non-pedantic code. In this case, getting the address of main.
+  __extension__ main();
 
-   // Exception if returning from start
+  // Exception if returning from start
 }
