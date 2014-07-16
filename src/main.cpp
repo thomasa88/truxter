@@ -129,6 +129,47 @@ namespace hw
     {
     };
   };
+
+  class Uart
+  {
+  public:
+    register_type UARTDR;
+    register_type UARTRSR_UARTECR;
+    register_pad pad1[4];
+    const register_type UARTFR;
+    register_pad pad2;
+    register_type UARTILPR;
+    register_type UARTIBRD;
+    register_type UARTFBRD;
+    register_type UARTLCRH;
+    register_type UARTCTL;
+    register_type UARTIFLS;
+    register_type UARTIM;
+    const register_type UARTRIS;
+    const register_type UARTMIS;
+    register_type UARTICR;
+    register_type UARTDMACTL;
+    register_pad pad3[22];
+    register_type UART9BITADDR;
+    register_type UART9BITAMASK;
+    register_pad pad4[965];
+    const register_type UARTPP;
+    register_pad pad5;
+    register_type UARTCC;
+    register_pad pad6;
+    const register_type UARTPeriphID4;
+    const register_type UARTPeriphID5;
+    const register_type UARTPeriphID6;
+    const register_type UARTPeriphID7;
+    const register_type UARTPeriphID0;
+    const register_type UARTPeriphID1;
+    const register_type UARTPeriphID2;
+    const register_type UARTPeriphID3;
+    const register_type UARTPCellID0;
+    const register_type UARTPCellID1;
+    const register_type UARTPCellID2;
+    const register_type UARTPCellID3;
+  };
 }
 
 hw::Gpio &portD = *reinterpret_cast<hw::Gpio*>(PORTD_AHB_BASE);
