@@ -185,7 +185,10 @@ namespace hw
     const register_t PORTF = 1 << 5;
 
     const register_t R0 = 1 << 0;
+    const register_t R1 = 1 << 1;
+    const register_t R2 = 1 << 2;
     const register_t R3 = 1 << 3;
+    const register_t R4 = 1 << 4;
     const register_t R5 = 1 << 5;
 
     const register_t TIMER0A_16_32_INT_NUM = 1 << 19;
