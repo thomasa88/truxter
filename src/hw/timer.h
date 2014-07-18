@@ -16,7 +16,7 @@ namespace hw
       register_t GPTMTBMR;
       register_t GPTMCTL;
       register_t GPTM_SYNC;
-      pad_t reserved1;
+      const pad_t reserved1;
       register_t GPTMIMR;
       const register_t GPTMRIS;
       const register_t GPTMMIS;
@@ -36,7 +36,7 @@ namespace hw
       const register_t GPTMTBPS;
       const register_t GPTMTAPV;
       const register_t GPTMTBPV;
-      pad_t reserved2[981];
+      const pad_t reserved2[981];
       const register_t GPTMPP;
     };
 

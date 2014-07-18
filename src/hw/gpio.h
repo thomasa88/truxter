@@ -21,7 +21,7 @@ namespace hw
       const register_t GPIOMIS;
       register_t GPIOICR;
       register_t GPIOAFSEL;
-      pad_t reserved1[55];
+      const pad_t reserved1[55];
       register_t GPIODR2R;
       register_t GPIODR4R;
       register_t GPIODR8R;
@@ -36,7 +36,7 @@ namespace hw
       register_t GPIOPCTL;
       register_t GPIOADCCTL;
       register_t GPIODMACTL;
-      pad_t reserved2[678];
+      const pad_t reserved2[678];
       const register_t GPIOPeriphID4;
       const register_t GPIOPeriphID5;
       const register_t GPIOPeriphID6;

@@ -13,9 +13,9 @@ namespace hw
     {
       register_t UARTDR;
       register_t UARTRSR_UARTECR;
-      pad_t reserved1[4];
+      const pad_t reserved1[4];
       const register_t UARTFR;
-      pad_t reserved2;
+      const pad_t reserved2;
       register_t UARTILPR;
       register_t UARTIBRD;
       register_t UARTFBRD;
@@ -27,14 +27,14 @@ namespace hw
       const register_t UARTMIS;
       register_t UARTICR;
       register_t UARTDMACTL;
-      pad_t reserved3[22];
+      const pad_t reserved3[22];
       register_t UART9BITADDR;
       register_t UART9BITAMASK;
-      pad_t reserved4[965];
+      const pad_t reserved4[965];
       const register_t UARTPP;
-      pad_t reserved4;
+      const pad_t reserved4;
       register_t UARTCC;
-      pad_t reserved4;
+      const pad_t reserved4;
       const register_t UARTPeriphID4;
       const register_t UARTPeriphID5;
       const register_t UARTPeriphID6;
