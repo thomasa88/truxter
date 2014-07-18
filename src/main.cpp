@@ -2,6 +2,7 @@
 
 #include "hw/interrupt.h"
 #include "hw/gpio.h"
+#include "hw/sysctl.h"
 #include "hw/timer.h"
 
 #define SYSCTL_BASE 0x400fe000
@@ -16,10 +17,6 @@
 #define PORTF 5
 #define R3 3
 #define R5 5
-#define GPIOHBCTL (*((volatile std::uint32_t *)(SYSCTL_BASE + 0x6c)))
-#define RCGCGPIO (*((volatile std::uint32_t *)(SYSCTL_BASE + 0x608)))
-
-#define RCGCTIMER (*((volatile std::uint32_t *)(SYSCTL_BASE + 0x604)))
 #define R0 0
 
 #define TAMR 0
@@ -39,13 +36,13 @@ int main()
 
 
   // Enable port clock in run mode
-  RCGCGPIO |= (1 << R5) | (1 << R3);
+  hw::sysctl::sysctl.RCGCGPIO |= (1 << R5) | (1 << R3);
 
   // Enable AHB (bus)
-  GPIOHBCTL |= (1 << PORTF) | (1 << PORTD);
+  hw::sysctl::sysctl.GPIOHBCTL |= (1 << PORTF) | (1 << PORTD);
 
   // Enable timer module clock in run mode
-  RCGCTIMER |= (1 << R0);
+  hw::sysctl::sysctl.RCGCTIMER |= (1 << R0);
 
   // Need to wait 3 clocks before touching GPIO registers after switching bus
   // Need to wait 3 clocks before touching timer registers after switching bus
