@@ -51,7 +51,7 @@ namespace hw
       const register_t GPIOPCellID3;
     };
 
-    namespace apb
+    namespace ahb
     {
       namespace
       {

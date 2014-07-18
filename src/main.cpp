@@ -52,12 +52,12 @@ int main()
   }
 
   // Digital pin
-  hw::gpio::apb::portF.GPIODEN |= (1 << BIT1);
-  hw::gpio::apb::portD.GPIODEN |= (1 << BIT0);
+  hw::gpio::ahb::portF.GPIODEN |= (1 << BIT1);
+  hw::gpio::ahb::portD.GPIODEN |= (1 << BIT0);
 
   // Led pin output
-  hw::gpio::apb::portF.GPIODIR |= (1 << BIT1);
-  hw::gpio::apb::portD.GPIODIR |= (1 << BIT0);
+  hw::gpio::ahb::portF.GPIODIR |= (1 << BIT1);
+  hw::gpio::ahb::portD.GPIODIR |= (1 << BIT0);
 
   // Default 2mA drive
 
@@ -97,6 +97,6 @@ ISR(vector_16_32_bit_timer_0a)
   // Clear interrupt flag early so interrupt won't be retriggered by NVIC
   hw::timer::timer0_16_32.GPTMICR = (1 << TATOCINT);
 
-  hw::gpio::apb::portD.GPIODATA[BIT0_MASK] = ~hw::gpio::apb::portD.GPIODATA[BIT0_MASK];
-  hw::gpio::apb::portF.GPIODATA[BIT1_MASK] = ~hw::gpio::apb::portF.GPIODATA[BIT1_MASK];
+  hw::gpio::ahb::portD.GPIODATA[BIT0_MASK] = ~hw::gpio::ahb::portD.GPIODATA[BIT0_MASK];
+  hw::gpio::ahb::portF.GPIODATA[BIT1_MASK] = ~hw::gpio::ahb::portF.GPIODATA[BIT1_MASK];
 }
