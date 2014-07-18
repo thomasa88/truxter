@@ -194,9 +194,9 @@ int main()
   // Need to wait 3 clocks before touching GPIO registers after switching bus
   // Need to wait 3 clocks before touching timer registers after switching bus
   for(int i = 0; i < 10; ++i)
-    {
-      asm("nop");
-    }
+  {
+    asm("nop");
+  }
 
   // Digital pin
   portF.GPIODEN |= (1 << BIT1);
@@ -227,14 +227,14 @@ int main()
 
 
   while(true)
-    {
-      // (&PORTF_GPIODATA)[BIT1_MASK] = (1 << BIT1);
-      // (&PORTF_GPIODATA)[BIT1_MASK] = (0 << BIT1);
-      int a = timer0_16_32.GPTMTAV;
-      int ris = timer0_16_32.GPTMRIS;
-      int mis = timer0_16_32.GPTMMIS;
-      asm("nop");
-    }
+  {
+    // (&PORTF_GPIODATA)[BIT1_MASK] = (1 << BIT1);
+    // (&PORTF_GPIODATA)[BIT1_MASK] = (0 << BIT1);
+    int a = timer0_16_32.GPTMTAV;
+    int ris = timer0_16_32.GPTMRIS;
+    int mis = timer0_16_32.GPTMMIS;
+    asm("nop");
+  }
 
   return 0;
 }

@@ -6,8 +6,8 @@
 ISR(blocking_isr)
 {
   while(true)
-    {
-    }
+  {
+  }
 }
 
 namespace interrupt
