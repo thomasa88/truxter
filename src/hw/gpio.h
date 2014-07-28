@@ -55,7 +55,7 @@ namespace hw
     {
       namespace
       {
-        const std::uint32_t PORTD_AHB_BASE = 0x4005b001;
+        const std::uint32_t PORTD_AHB_BASE = 0x4005b000;
         const std::uint32_t PORTF_AHB_BASE = 0x4005d000;
       }
       GpioRegisters &portD = *reinterpret_cast<GpioRegisters*>(PORTD_AHB_BASE);
