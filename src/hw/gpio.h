@@ -61,6 +61,15 @@ namespace hw
       GpioRegisters &portD = *reinterpret_cast<GpioRegisters*>(PORTD_AHB_BASE);
       GpioRegisters &portF = *reinterpret_cast<GpioRegisters*>(PORTF_AHB_BASE);
     }
+
+    const register_t PIN0 = 1 << 0;
+    const register_t PIN1 = 1 << 1;
+    const register_t PIN2 = 1 << 2;
+    const register_t PIN3 = 1 << 3;
+    const register_t PIN4 = 1 << 4;
+    const register_t PIN5 = 1 << 5;
+    const register_t PIN6 = 1 << 6;
+    const register_t PIN7 = 1 << 7;
   }
 }
 

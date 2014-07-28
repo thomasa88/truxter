@@ -7,12 +7,6 @@
 
 #define SYSCTL_BASE 0x400fe000
 
-// This shifting works if working with 32-bit pointers
-#define BIT0_MASK (1 << 0)
-#define BIT1_MASK (1 << 1)
-#define BIT0 0
-#define BIT1 1
-
 #define PORTD 3
 #define PORTF 5
 #define R3 3
@@ -52,12 +46,12 @@ int main()
   }
 
   // Digital pin
-  hw::gpio::ahb::portF.GPIODEN |= (1 << BIT1);
-  hw::gpio::ahb::portD.GPIODEN |= (1 << BIT0);
+  hw::gpio::ahb::portF.GPIODEN |= hw::gpio::PIN1;
+  hw::gpio::ahb::portD.GPIODEN |= hw::gpio::PIN0;
 
   // Led pin output
-  hw::gpio::ahb::portF.GPIODIR |= (1 << BIT1);
-  hw::gpio::ahb::portD.GPIODIR |= (1 << BIT0);
+  hw::gpio::ahb::portF.GPIODIR |= hw::gpio::PIN1;
+  hw::gpio::ahb::portD.GPIODIR |= hw::gpio::PIN0;
 
   // Default 2mA drive
 
@@ -94,6 +88,6 @@ ISR(vector_16_32_bit_timer_0a)
   // Clear interrupt flag early so interrupt won't be retriggered by NVIC
   hw::timer::timer0_16_32.GPTMICR = (1 << TATOCINT);
 
-  hw::gpio::ahb::portD.GPIODATA[BIT0_MASK] = ~hw::gpio::ahb::portD.GPIODATA[BIT0_MASK];
-  hw::gpio::ahb::portF.GPIODATA[BIT1_MASK] = ~hw::gpio::ahb::portF.GPIODATA[BIT1_MASK];
+  hw::gpio::ahb::portD.GPIODATA[hw::gpio::PIN0] = ~hw::gpio::ahb::portD.GPIODATA[hw::gpio::PIN0];
+  hw::gpio::ahb::portF.GPIODATA[hw::gpio::PIN1] = ~hw::gpio::ahb::portF.GPIODATA[hw::gpio::PIN1];
 }
