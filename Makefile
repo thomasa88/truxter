@@ -29,7 +29,7 @@ endif
 CXXFLAGS := $(CFLAGS) -std=c++11 -fno-rtti -fno-exceptions
 
 # Better variable for flags passed directly to ld?
-LDFLAGS := -Wl,-T $(SRC_DIR)/hw/tm4c123gh6pm.ld -Wl,--gc-sections
+LDFLAGS := -Wl,-T $(SRC_DIR)/hw/tm4c1233h6pm.ld -Wl,--gc-sections
 
 .DEFAULT_GOAL: all
 .PRECIOUS: $(OBJ_DIR)/%.o $(BIN_DIR)/%.axf
