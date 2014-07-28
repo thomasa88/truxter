@@ -83,9 +83,6 @@ int main()
   {
     // (&PORTF_GPIODATA)[BIT1_MASK] = (1 << BIT1);
     // (&PORTF_GPIODATA)[BIT1_MASK] = (0 << BIT1);
-    int a = hw::timer::timer0_16_32.GPTMTAV;
-    int ris = hw::timer::timer0_16_32.GPTMRIS;
-    int mis = hw::timer::timer0_16_32.GPTMMIS;
     asm("nop");
   }
 
