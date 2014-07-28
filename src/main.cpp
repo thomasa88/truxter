@@ -1,42 +1,26 @@
 #include <cstdint>
 
+#include "hw/coreperiph.h"
 #include "hw/interrupt.h"
 #include "hw/gpio.h"
 #include "hw/sysctl.h"
 #include "hw/timer.h"
 
-#define SYSCTL_BASE 0x400fe000
-
-#define PORTD 3
-#define PORTF 5
-#define R3 3
-#define R5 5
-#define R0 0
-
-#define TAMR 0
-#define TAEN 0
-#define TATOIM 0
-#define TATOCINT 0
-
-#define TIMER0A_16_32_INT_NUM 19
-#define CORE_PERIPH_BASE 0xe000e000
-// Treat EN* as 128 bit variable? Bit order?
-#define EN0 (*((volatile std::uint32_t *)(CORE_PERIPH_BASE + 0x100)))
+using namespace hw;
 
 int main()
 {
   // need to configure sysclk?
   // need to start bus?
 
-
   // Enable port clock in run mode
-  hw::sysctl::sysctl.RCGCGPIO |= (1 << R5) | (1 << R3);
+  sysctl::sysctl.RCGCGPIO |= sysctl::R5 | sysctl::R3;
 
   // Enable AHB (bus)
-  hw::sysctl::sysctl.GPIOHBCTL |= (1 << PORTF) | (1 << PORTD);
+  sysctl::sysctl.GPIOHBCTL |= sysctl::PORTF | sysctl::PORTD;
 
   // Enable timer module clock in run mode
-  hw::sysctl::sysctl.RCGCTIMER |= (1 << R0);
+  sysctl::sysctl.RCGCTIMER |= sysctl::R0;
 
   // Need to wait 3 clocks before touching GPIO registers after switching bus
   // Need to wait 3 clocks before touching timer registers after switching bus
@@ -46,12 +30,12 @@ int main()
   }
 
   // Digital pin
-  hw::gpio::ahb::portF.GPIODEN |= hw::gpio::PIN1;
-  hw::gpio::ahb::portD.GPIODEN |= hw::gpio::PIN0;
+  gpio::ahb::portF.GPIODEN |= gpio::PIN1;
+  gpio::ahb::portD.GPIODEN |= gpio::PIN0;
 
   // Led pin output
-  hw::gpio::ahb::portF.GPIODIR |= hw::gpio::PIN1;
-  hw::gpio::ahb::portD.GPIODIR |= hw::gpio::PIN0;
+  gpio::ahb::portF.GPIODIR |= gpio::PIN1;
+  gpio::ahb::portD.GPIODIR |= gpio::PIN0;
 
   // Default 2mA drive
 
@@ -61,22 +45,19 @@ int main()
   // Test test;
   // test.a.b();
 
-
-  EN0 = (1 << TIMER0A_16_32_INT_NUM);
+  coreperiph::EN0 = sysctl::TIMER0A_16_32_INT_NUM;
 
   // GPTMCL TnEN = 0;
   // GPTMCFG = 0x0;
-  hw::timer::timer0_16_32.GPTMTAMR |= (0x2 << TAMR);
-  hw::timer::timer0_16_32.GPTMTAILR = 80000000;
-  hw::timer::timer0_16_32.GPTMIMR |= (1 << TATOIM);
-  // hw::timer::TIMER0_16_32_GPTMCTL |= (1 << TAEN);
-  hw::timer::timer0_16_32.GPTMCTL |= (1 << TAEN);
+  timer::timer0_16_32.GPTMTAMR |= timer::TAMR_PERIODIC;
+  timer::timer0_16_32.GPTMTAILR = 80000000;
+  timer::timer0_16_32.GPTMIMR |= timer::TATOIM;
+  // timer::TIMER0_16_32_GPTMCTL |= (1 << TAEN);
+  timer::timer0_16_32.GPTMCTL |= timer::TAEN;
 
 
   while(true)
   {
-    // (&PORTF_GPIODATA)[BIT1_MASK] = (1 << BIT1);
-    // (&PORTF_GPIODATA)[BIT1_MASK] = (0 << BIT1);
     asm("nop");
   }
 
@@ -86,8 +67,8 @@ int main()
 ISR(vector_16_32_bit_timer_0a)
 {
   // Clear interrupt flag early so interrupt won't be retriggered by NVIC
-  hw::timer::timer0_16_32.GPTMICR = (1 << TATOCINT);
+  timer::timer0_16_32.GPTMICR = timer::TATOCINT;
 
-  hw::gpio::ahb::portD.GPIODATA[hw::gpio::PIN0] = ~hw::gpio::ahb::portD.GPIODATA[hw::gpio::PIN0];
-  hw::gpio::ahb::portF.GPIODATA[hw::gpio::PIN1] = ~hw::gpio::ahb::portF.GPIODATA[hw::gpio::PIN1];
+  gpio::ahb::portD.GPIODATA[gpio::PIN0] = ~gpio::ahb::portD.GPIODATA[gpio::PIN0];
+  gpio::ahb::portF.GPIODATA[gpio::PIN1] = ~gpio::ahb::portF.GPIODATA[gpio::PIN1];
 }

@@ -46,6 +46,11 @@ namespace hw
     }
 
     TimerRegisters &timer0_16_32 = *reinterpret_cast<TimerRegisters*>(TIMER0_16_32_BASE);
+
+    const register_t TAMR_PERIODIC = 0x2 << 0;
+    const register_t TAEN = 1 << 0;
+    const register_t TATOIM = 1 << 0;
+    const register_t TATOCINT = 1 << 0;
   }
 }
 
