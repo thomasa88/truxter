@@ -65,6 +65,6 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 $(DEP_DIR)/%.d: $(SRC_DIR)/%.cpp
 	@echo "DEP $^ -> $@"
 	@mkdir -p `dirname $@`
-	@$(CXX) $(CXXFLAGS) -MM $< | sed "s@^.*:@$(OBJ_DIR)/$*.o $@:@" > $@
+	@$(CXX) $(CXXFLAGS) -MM $< | sed "s@^.*:@$(BUILD_DIR)/debug/obj/$*.o $(BUILD_DIR)/release/obj/$*.o $@:@" > $@
 
 -include $(DEP_FILES)
