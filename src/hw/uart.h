@@ -32,9 +32,9 @@ namespace hw
       register_t UART9BITAMASK;
       const pad_t reserved4[965];
       const register_t UARTPP;
-      const pad_t reserved4;
+      const pad_t reserved5;
       register_t UARTCC;
-      const pad_t reserved4;
+      const pad_t reserved6;
       const register_t UARTPeriphID4;
       const register_t UARTPeriphID5;
       const register_t UARTPeriphID6;
@@ -48,6 +48,18 @@ namespace hw
       const register_t UARTPCellID2;
       const register_t UARTPCellID3;
     };
+
+    namespace
+    {
+      const std::uint32_t UART1_BASE = 0x4000D000;
+    }
+
+    UartRegisters &uart1 = *reinterpret_cast<UartRegisters*>(UART1_BASE);
+
+    const register_t WLEN_8BIT = 0x3 << 5;
+    const register_t UARTEN = 1 << 0;
+    const register_t BUSY = 1 << 3;
+    const register_t RXFE = 1 << 4;
   }
 }
 

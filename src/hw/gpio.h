@@ -55,11 +55,22 @@ namespace hw
     {
       namespace
       {
+        const std::uint32_t PORTB_AHB_BASE = 0x40059000;
         const std::uint32_t PORTD_AHB_BASE = 0x4005b000;
         const std::uint32_t PORTF_AHB_BASE = 0x4005d000;
       }
+      GpioRegisters &portB = *reinterpret_cast<GpioRegisters*>(PORTB_AHB_BASE);
       GpioRegisters &portD = *reinterpret_cast<GpioRegisters*>(PORTD_AHB_BASE);
       GpioRegisters &portF = *reinterpret_cast<GpioRegisters*>(PORTF_AHB_BASE);
+    }
+
+    namespace apb
+    {
+       namespace
+       {
+	  const std::uint32_t PORTB_APB_BASE = 0x40005000;
+       }
+       GpioRegisters &portB = *reinterpret_cast<GpioRegisters*>(PORTB_APB_BASE);
     }
 
     const register_t PIN0 = 1 << 0;
@@ -70,6 +81,13 @@ namespace hw
     const register_t PIN5 = 1 << 5;
     const register_t PIN6 = 1 << 6;
     const register_t PIN7 = 1 << 7;
+
+    const std::uint32_t PMC0_OFFSET = 0;
+    const std::uint32_t PMC1_OFFSET = 4;
+    const register_t PMC0_MASK = 0xf << PMC0_OFFSET;
+    const register_t PMC1_MASK = 0xf << PMC1_OFFSET;
+    const register_t PB0_U1RX = 1 << PMC0_OFFSET;
+    const register_t PB1_U1TX = 1 << PMC1_OFFSET;
   }
 }
 
