@@ -62,6 +62,15 @@ namespace hw
       GpioRegisters &portF = *reinterpret_cast<GpioRegisters*>(PORTF_AHB_BASE);
     }
 
+    namespace apb
+    {
+       namespace
+       {
+	  const std::uint32_t PORTB_APB_BASE = 0x40005000;
+       }
+       GpioRegisters &portB = *reinterpret_cast<GpioRegisters*>(PORTB_APB_BASE);
+    }
+
     const register_t PIN0 = 1 << 0;
     const register_t PIN1 = 1 << 1;
     const register_t PIN2 = 1 << 2;
