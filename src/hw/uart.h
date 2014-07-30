@@ -47,6 +47,8 @@ namespace hw
       const register_t UARTPCellID1;
       const register_t UARTPCellID2;
       const register_t UARTPCellID3;
+
+      void enable();
     };
 
     namespace

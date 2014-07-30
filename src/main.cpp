@@ -76,37 +76,23 @@ int main()
 void enable_uart_1()
 {
   // UART 1: PB0=U1RX, PB1=U1TX
-  // Port B must be clocked and pin directions must be set up correctly
+  uart::uart1->enable();
 
   // Connect UART to Port B
   // Enable clocking for Port B
   sysctl::sysctl->RCGCGPIO |= sysctl::R1;
 
-  // Clock UART module
-  sysctl::sysctl->RCGCUART |= sysctl::R1;
-
-  for(int i = 0; i < 10; ++i)
+  for(int i = 0; i < 3; ++i)
   {
     asm("nop");
   }
 
-  gpio::apb::portB->GPIODEN |= gpio::PIN0 | gpio::PIN1;
   gpio::apb::portB->GPIODIR &= ~(gpio::PIN0);
   gpio::apb::portB->GPIODIR |= gpio::PIN1;
-
-  // baud_rate = 9600;
-  std::uint32_t div_int = 104;
-  std::uint32_t div_frac = 11;
-
-  uart::uart1->UARTIBRD = div_int;
-  uart::uart1->UARTFBRD = div_frac;
-  uart::uart1->UARTLCRH |= uart::WLEN_8BIT;
-
+  gpio::apb::portB->GPIODEN |= gpio::PIN0 | gpio::PIN1;
   gpio::apb::portB->GPIOPCTL &= ~(gpio::PMC0_MASK | gpio::PMC1_MASK);
   gpio::apb::portB->GPIOPCTL |= gpio::PB0_U1RX | gpio::PB1_U1TX;
   gpio::apb::portB->GPIOAFSEL |= gpio::PIN1 | gpio::PIN0;
-
-  uart::uart1->UARTCTL |= uart::UARTEN;
 }
 
 ISR(vector_16_32_bit_timer_0a)
