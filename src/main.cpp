@@ -40,14 +40,6 @@ int main()
   gpio::ahb::portF->GPIODIR |= gpio::PIN1;
   gpio::ahb::portD->GPIODIR |= gpio::PIN0;
 
-  // Default 2mA drive
-
-  // t.a.b();
-  // A &a_ = t.a;
-  //.b();
-  // Test test;
-  // test.a.b();
-
   *coreperiph::EN0 = sysctl::TIMER0A_16_32_INT_NUM;
 
   // GPTMCL TnEN = 0;
