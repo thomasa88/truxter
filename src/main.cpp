@@ -53,7 +53,7 @@ int main()
   // GPTMCL TnEN = 0;
   // GPTMCFG = 0x0;
   timer::timer0_16_32->GPTMTAMR |= timer::TAMR_PERIODIC;
-  timer::timer0_16_32->GPTMTAILR = 80000000;
+  timer::timer0_16_32->GPTMTAILR = 16000000;
   timer::timer0_16_32->GPTMIMR |= timer::TATOIM;
   // timer::TIMER0_16_32_GPTMCTL |= (1 << TAEN);
   timer::timer0_16_32->GPTMCTL |= timer::TAEN;
