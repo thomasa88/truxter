@@ -179,7 +179,7 @@ namespace hw
       const std::uint32_t SYSCTL_BASE = 0x400fe000;
     }
 
-    SysctlRegisters &sysctl = *reinterpret_cast<SysctlRegisters*>(SYSCTL_BASE);
+    SysctlRegisters *const sysctl = reinterpret_cast<SysctlRegisters*>(SYSCTL_BASE);
 
     const register_t PORTD = 1 << 3;
     const register_t PORTF = 1 << 5;

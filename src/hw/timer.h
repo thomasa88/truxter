@@ -45,7 +45,7 @@ namespace hw
       const std::uint32_t TIMER0_16_32_BASE = 0x40030000;
     }
 
-    TimerRegisters &timer0_16_32 = *reinterpret_cast<TimerRegisters*>(TIMER0_16_32_BASE);
+    TimerRegisters *const timer0_16_32 = reinterpret_cast<TimerRegisters*>(TIMER0_16_32_BASE);
 
     const register_t TAMR_PERIODIC = 0x2 << 0;
     const register_t TAEN = 1 << 0;

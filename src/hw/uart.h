@@ -54,7 +54,7 @@ namespace hw
       const std::uint32_t UART1_BASE = 0x4000D000;
     }
 
-    UartRegisters &uart1 = *reinterpret_cast<UartRegisters*>(UART1_BASE);
+    UartRegisters *const uart1 = reinterpret_cast<UartRegisters*>(UART1_BASE);
 
     const register_t WLEN_8BIT = 0x3 << 5;
     const register_t UARTEN = 1 << 0;
